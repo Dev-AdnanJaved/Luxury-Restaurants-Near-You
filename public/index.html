@@ -19,15 +19,7 @@
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--dark);
-      color: var(--text);
-      overflow-x: hidden;
-    }
-
-    /* ── SCROLLBAR ── */
+    body { font-family: 'Inter', sans-serif; background: var(--dark); color: var(--text); overflow-x: hidden; }
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: var(--dark2); }
     ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
@@ -38,406 +30,213 @@
       padding: 20px 60px;
       display: flex; align-items: center; justify-content: space-between;
       background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
-      transition: background 0.3s;
+      transition: background 0.3s, padding 0.3s;
     }
     nav.scrolled { background: rgba(10,10,10,0.97); border-bottom: 1px solid var(--border); padding: 14px 60px; }
     .nav-logo {
       font-family: 'Playfair Display', serif;
       font-size: 28px; font-weight: 700;
-      color: var(--gold);
-      letter-spacing: 3px;
-      text-decoration: none;
+      color: var(--gold); letter-spacing: 3px; text-decoration: none;
     }
     .nav-logo span { color: var(--text); font-weight: 400; }
     .nav-links { display: flex; gap: 36px; list-style: none; }
-    .nav-links a {
-      color: rgba(240,237,232,0.75);
-      text-decoration: none;
-      font-size: 13px; font-weight: 500;
-      letter-spacing: 1.5px; text-transform: uppercase;
-      transition: color 0.2s;
-    }
+    .nav-links a { color: rgba(240,237,232,0.75); text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; transition: color 0.2s; }
     .nav-links a:hover { color: var(--gold); }
-    .nav-reserve {
-      background: transparent;
-      border: 1px solid var(--gold);
-      color: var(--gold);
-      padding: 10px 24px;
-      font-size: 12px; font-weight: 600;
-      letter-spacing: 2px; text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
+    .nav-reserve { background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 10px 24px; font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
     .nav-reserve:hover { background: var(--gold); color: #000; }
 
-    /* ── LOCATION BANNER ── */
+    /* ── LOCATION BANNER — TOP SLIDE DOWN ── */
     #loc-banner {
       display: none;
-      position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
-      z-index: 999;
-      background: var(--dark3);
-      border: 1px solid var(--gold);
-      border-radius: 50px;
-      padding: 14px 28px;
-      display: flex; align-items: center; gap: 14px;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(201,168,76,0.2);
-      animation: slideUp 0.5s ease;
-      white-space: nowrap;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1100;
+      background: linear-gradient(90deg, #1a1500, #1e1a06, #1a1500);
+      border-bottom: 1px solid rgba(201,168,76,0.4);
+      padding: 10px 20px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      transform: translateY(-100%);
+      animation: dropDown 0.4s ease forwards;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.5);
     }
-    @keyframes slideUp { from { opacity:0; transform: translateX(-50%) translateY(20px); } to { opacity:1; transform: translateX(-50%) translateY(0); } }
-    #loc-banner.hidden { display: none !important; }
-    .loc-icon { font-size: 20px; }
-    .loc-text { font-size: 13px; color: var(--muted); }
-    .loc-text strong { color: var(--text); font-weight: 500; }
+    #loc-banner.visible { display: flex; }
+    @keyframes dropDown {
+      from { transform: translateY(-100%); }
+      to   { transform: translateY(0); }
+    }
+    .loc-left { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
+    .loc-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+    .loc-text { font-size: 12px; color: rgba(240,237,232,0.8); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .loc-text strong { color: var(--gold-light); font-weight: 600; }
     #loc-btn {
       background: var(--gold);
       color: #000;
       border: none;
-      padding: 8px 20px;
-      border-radius: 50px;
-      font-size: 12px; font-weight: 700;
-      letter-spacing: 1px; text-transform: uppercase;
-      cursor: pointer;
-      transition: background 0.2s;
+      padding: 6px 16px;
+      border-radius: 3px;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      cursor: pointer; transition: background 0.2s;
+      flex-shrink: 0;
+      white-space: nowrap;
     }
     #loc-btn:hover { background: var(--gold-light); }
     #loc-close {
       background: none; border: none;
       color: var(--muted); cursor: pointer;
-      font-size: 18px; line-height: 1;
+      font-size: 16px; line-height: 1;
+      flex-shrink: 0; padding: 2px 4px;
       transition: color 0.2s;
     }
     #loc-close:hover { color: var(--text); }
 
     /* ── LOCATION DENIED MODAL ── */
     #loc-modal {
-      display: none;
-      position: fixed; inset: 0; z-index: 2000;
+      display: none; position: fixed; inset: 0; z-index: 2000;
       background: rgba(0,0,0,0.85);
       align-items: center; justify-content: center;
+      padding: 20px;
     }
     #loc-modal.show { display: flex; }
     .modal-box {
-      background: var(--dark3);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 40px;
-      max-width: 420px; width: 90%;
-      text-align: center;
+      background: var(--dark3); border: 1px solid var(--border);
+      border-radius: 12px; padding: 36px 32px;
+      max-width: 400px; width: 100%; text-align: center;
     }
-    .modal-icon { font-size: 48px; margin-bottom: 20px; }
-    .modal-box h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 22px; margin-bottom: 12px;
-    }
-    .modal-box p { color: var(--muted); font-size: 14px; line-height: 1.7; margin-bottom: 24px; }
-    .modal-steps {
-      text-align: left;
-      background: var(--dark2);
-      border-radius: 10px;
-      padding: 16px 20px;
-      margin-bottom: 24px;
-    }
-    .modal-steps li {
-      color: var(--muted); font-size: 13px;
-      list-style: none; padding: 5px 0;
-      border-bottom: 1px solid var(--border);
-    }
+    .modal-icon { font-size: 44px; margin-bottom: 18px; }
+    .modal-box h3 { font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 10px; }
+    .modal-box p { color: var(--muted); font-size: 13px; line-height: 1.7; margin-bottom: 20px; }
+    .modal-steps { text-align: left; background: var(--dark2); border-radius: 8px; padding: 14px 18px; margin-bottom: 22px; }
+    .modal-steps li { color: var(--muted); font-size: 12px; list-style: none; padding: 5px 0; border-bottom: 1px solid var(--border); }
     .modal-steps li:last-child { border-bottom: none; }
     .modal-steps li span { color: var(--gold); margin-right: 8px; }
-    .modal-close {
-      background: var(--gold); color: #000;
-      border: none; padding: 12px 32px;
-      border-radius: 50px; font-size: 13px; font-weight: 700;
-      letter-spacing: 1px; text-transform: uppercase;
-      cursor: pointer;
-    }
+    .modal-close { background: var(--gold); color: #000; border: none; padding: 11px 28px; border-radius: 3px; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; }
 
     /* ── HERO ── */
     #hero {
-      height: 100vh; min-height: 700px;
-      position: relative;
-      display: flex; align-items: center;
-      overflow: hidden;
+      height: 100vh; min-height: 600px;
+      position: relative; display: flex; align-items: center; overflow: hidden;
     }
     .hero-bg {
       position: absolute; inset: 0;
       background-image: url('https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?w=1920&q=85');
       background-size: cover; background-position: center;
-      transform: scale(1.05);
-      transition: transform 8s ease;
+      transform: scale(1.05); transition: transform 8s ease;
     }
     .hero-bg.loaded { transform: scale(1); }
-    .hero-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.7) 100%);
-    }
-    .hero-content {
-      position: relative; z-index: 1;
-      padding: 0 60px;
-      max-width: 700px;
-    }
-    .hero-tag {
-      display: inline-block;
-      border: 1px solid var(--gold);
-      color: var(--gold);
-      font-size: 11px; font-weight: 600;
-      letter-spacing: 3px; text-transform: uppercase;
-      padding: 6px 18px;
-      margin-bottom: 28px;
-    }
-    .hero-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(42px, 6vw, 80px);
-      font-weight: 700; line-height: 1.1;
-      margin-bottom: 24px;
-    }
+    .hero-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.7) 100%); }
+    .hero-content { position: relative; z-index: 1; padding: 0 60px; max-width: 680px; }
+    .hero-tag { display: inline-block; border: 1px solid var(--gold); color: var(--gold); font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; padding: 6px 18px; margin-bottom: 26px; }
+    .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(40px, 6vw, 76px); font-weight: 700; line-height: 1.1; margin-bottom: 22px; }
     .hero-title em { color: var(--gold); font-style: italic; }
-    .hero-sub {
-      font-size: 16px; color: rgba(240,237,232,0.7);
-      line-height: 1.8; margin-bottom: 40px;
-      font-weight: 300;
-    }
-    .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
-    .btn-primary {
-      background: var(--gold); color: #000;
-      border: none; padding: 16px 36px;
-      font-size: 13px; font-weight: 700;
-      letter-spacing: 2px; text-transform: uppercase;
-      cursor: pointer; transition: all 0.3s;
-    }
+    .hero-sub { font-size: 15px; color: rgba(240,237,232,0.7); line-height: 1.8; margin-bottom: 38px; font-weight: 300; }
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary { background: var(--gold); color: #000; border: none; padding: 15px 34px; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
     .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
-    .btn-outline {
-      background: transparent;
-      border: 1px solid rgba(240,237,232,0.4);
-      color: var(--text);
-      padding: 16px 36px;
-      font-size: 13px; font-weight: 500;
-      letter-spacing: 2px; text-transform: uppercase;
-      cursor: pointer; transition: all 0.3s;
-    }
+    .btn-outline { background: transparent; border: 1px solid rgba(240,237,232,0.35); color: var(--text); padding: 15px 34px; font-size: 12px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
     .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
 
-    /* ── STATS BAR ── */
-    .stats {
-      background: var(--dark2);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 30px 60px;
-      display: flex; justify-content: center; gap: 80px;
-    }
+    /* ── STATS ── */
+    .stats { background: var(--dark2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 60px; display: flex; justify-content: center; gap: 72px; flex-wrap: wrap; }
     .stat { text-align: center; }
-    .stat-num {
-      font-family: 'Playfair Display', serif;
-      font-size: 32px; font-weight: 700;
-      color: var(--gold); display: block;
-    }
-    .stat-label {
-      font-size: 11px; color: var(--muted);
-      letter-spacing: 2px; text-transform: uppercase;
-      margin-top: 4px;
-    }
+    .stat-num { font-family: 'Playfair Display', serif; font-size: 30px; font-weight: 700; color: var(--gold); display: block; }
+    .stat-label { font-size: 10px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; }
 
-    /* ── SECTION COMMON ── */
-    section { padding: 90px 60px; }
-    .section-tag {
-      font-size: 11px; font-weight: 600;
-      letter-spacing: 3px; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 16px;
-    }
-    .section-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(28px, 4vw, 48px);
-      font-weight: 700; line-height: 1.2;
-      margin-bottom: 12px;
-    }
-    .section-sub {
-      color: var(--muted); font-size: 15px;
-      line-height: 1.7; max-width: 540px;
-      margin-bottom: 56px;
-    }
+    /* ── SECTIONS ── */
+    section { padding: 80px 60px; }
+    .section-tag { font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+    .section-title { font-family: 'Playfair Display', serif; font-size: clamp(26px, 4vw, 44px); font-weight: 700; line-height: 1.2; margin-bottom: 10px; }
+    .section-sub { color: var(--muted); font-size: 14px; line-height: 1.8; max-width: 520px; margin-bottom: 50px; }
 
     /* ── RESTAURANT GRID ── */
-    .rest-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 28px;
-    }
-    .rest-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
-      group: true;
-    }
-    .rest-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-      border-color: var(--gold);
-    }
-    .rest-img {
-      width: 100%; height: 220px;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.5s;
-      filter: brightness(0.9);
-    }
-    .rest-card:hover .rest-img { transform: scale(1.05); filter: brightness(1); }
-    .rest-img-wrap { overflow: hidden; position: relative; }
-    .rest-badge {
-      position: absolute; top: 14px; right: 14px;
-      background: var(--gold); color: #000;
-      font-size: 10px; font-weight: 700;
-      letter-spacing: 1.5px; text-transform: uppercase;
-      padding: 5px 12px; border-radius: 2px;
-    }
-    .rest-body { padding: 22px 24px; }
-    .rest-cuisine {
-      font-size: 10px; font-weight: 600;
-      letter-spacing: 2px; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 8px;
-    }
-    .rest-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 20px; font-weight: 600;
-      margin-bottom: 8px; line-height: 1.2;
-    }
-    .rest-area {
-      font-size: 13px; color: var(--muted);
-      margin-bottom: 18px;
-      display: flex; align-items: center; gap: 6px;
-    }
-    .rest-area::before { content: "📍"; font-size: 12px; }
-    .rest-meta {
-      display: flex; align-items: center;
-      justify-content: space-between;
-      padding-top: 16px;
-      border-top: 1px solid var(--border);
-    }
-    .rest-rating {
-      display: flex; align-items: center; gap: 6px;
-      font-size: 13px; font-weight: 600;
-    }
-    .stars { color: var(--gold); font-size: 12px; }
-    .rest-price { font-size: 13px; color: var(--muted); letter-spacing: 1px; }
+    .rest-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
+    .rest-card { background: var(--card); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s; }
+    .rest-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.5); border-color: var(--gold); }
+    .rest-img-wrap { overflow: hidden; position: relative; background: var(--dark3); }
+    .rest-img { width: 100%; height: 210px; object-fit: cover; display: block; transition: transform 0.5s, opacity 0.4s; opacity: 0; }
+    .rest-img.loaded { opacity: 1; }
+    .rest-card:hover .rest-img { transform: scale(1.05); }
+    .img-placeholder { width: 100%; height: 210px; background: linear-gradient(135deg, #1a1a1a, #222); display: flex; align-items: center; justify-content: center; font-size: 40px; position: absolute; top: 0; left: 0; }
+    .rest-badge { position: absolute; top: 12px; right: 12px; background: var(--gold); color: #000; font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 2px; }
+    .rest-body { padding: 20px 22px; }
+    .rest-cuisine { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 7px; }
+    .rest-name { font-family: 'Playfair Display', serif; font-size: 19px; font-weight: 600; margin-bottom: 7px; line-height: 1.2; }
+    .rest-area { font-size: 12px; color: var(--muted); margin-bottom: 16px; display: flex; align-items: center; gap: 5px; }
+    .rest-area::before { content: "📍"; font-size: 11px; }
+    .rest-meta { display: flex; align-items: center; justify-content: space-between; padding-top: 14px; border-top: 1px solid var(--border); }
+    .rest-rating { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; }
+    .stars { color: var(--gold); font-size: 11px; }
+    .rest-price { font-size: 12px; color: var(--muted); letter-spacing: 1px; }
 
     /* ── CATEGORIES ── */
     #categories { background: var(--dark2); }
-    .cat-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 16px;
-    }
-    .cat-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 28px 20px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-    .cat-card:hover {
-      border-color: var(--gold);
-      background: rgba(201,168,76,0.05);
-      transform: translateY(-4px);
-    }
-    .cat-emoji { font-size: 32px; margin-bottom: 12px; }
-    .cat-name {
-      font-size: 13px; font-weight: 600;
-      letter-spacing: 1px; margin-bottom: 6px;
-    }
-    .cat-count { font-size: 11px; color: var(--muted); }
+    .cat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
+    .cat-card { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 26px 18px; text-align: center; cursor: pointer; transition: all 0.3s; }
+    .cat-card:hover { border-color: var(--gold); background: rgba(201,168,76,0.05); transform: translateY(-4px); }
+    .cat-emoji { font-size: 30px; margin-bottom: 10px; }
+    .cat-name { font-size: 12px; font-weight: 600; letter-spacing: 1px; margin-bottom: 5px; }
+    .cat-count { font-size: 10px; color: var(--muted); }
 
     /* ── EXPERIENCE ── */
-    .exp-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 2px;
-    }
-    .exp-img {
-      width: 100%; height: 400px;
-      object-fit: cover;
-      display: block;
-      filter: brightness(0.8);
-      transition: filter 0.3s;
-    }
+    .exp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+    .exp-img { width: 100%; height: 380px; object-fit: cover; display: block; filter: brightness(0.8); transition: filter 0.3s; }
     .exp-img:hover { filter: brightness(1); }
-    .exp-img.tall { height: 802px; }
+    .exp-img.tall { height: 762px; }
     .exp-right { display: flex; flex-direction: column; gap: 2px; }
 
     /* ── FEATURES ── */
     #features { background: var(--dark2); }
-    .feat-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 32px;
-    }
-    .feat-card {
-      padding: 36px 30px;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      transition: border-color 0.3s;
-    }
+    .feat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; }
+    .feat-card { padding: 32px 26px; border: 1px solid var(--border); border-radius: 4px; transition: border-color 0.3s; }
     .feat-card:hover { border-color: var(--gold); }
-    .feat-icon { font-size: 36px; margin-bottom: 20px; }
-    .feat-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 20px; margin-bottom: 12px;
-    }
-    .feat-text { color: var(--muted); font-size: 14px; line-height: 1.8; }
+    .feat-icon { font-size: 32px; margin-bottom: 18px; }
+    .feat-title { font-family: 'Playfair Display', serif; font-size: 18px; margin-bottom: 10px; }
+    .feat-text { color: var(--muted); font-size: 13px; line-height: 1.8; }
 
     /* ── FOOTER ── */
-    footer {
-      background: var(--dark2);
-      border-top: 1px solid var(--border);
-      padding: 60px 60px 30px;
-    }
-    .footer-grid {
-      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 48px; margin-bottom: 48px;
-    }
-    .footer-logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 32px; color: var(--gold);
-      letter-spacing: 3px; margin-bottom: 16px;
-      display: block;
-    }
-    .footer-desc { color: var(--muted); font-size: 14px; line-height: 1.8; }
-    .footer-col h4 {
-      font-size: 11px; font-weight: 600;
-      letter-spacing: 2.5px; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 20px;
-    }
+    footer { background: var(--dark2); border-top: 1px solid var(--border); padding: 56px 60px 28px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 44px; margin-bottom: 44px; }
+    .footer-logo { font-family: 'Playfair Display', serif; font-size: 30px; color: var(--gold); letter-spacing: 3px; margin-bottom: 14px; display: block; }
+    .footer-desc { color: var(--muted); font-size: 13px; line-height: 1.8; }
+    .footer-col h4 { font-size: 10px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; }
     .footer-col ul { list-style: none; }
-    .footer-col ul li { margin-bottom: 10px; }
-    .footer-col ul li a {
-      color: var(--muted); text-decoration: none;
-      font-size: 14px; transition: color 0.2s;
-    }
+    .footer-col ul li { margin-bottom: 9px; }
+    .footer-col ul li a { color: var(--muted); text-decoration: none; font-size: 13px; transition: color 0.2s; }
     .footer-col ul li a:hover { color: var(--text); }
-    .footer-bottom {
-      border-top: 1px solid var(--border);
-      padding-top: 28px;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .footer-bottom p { color: var(--muted); font-size: 13px; }
+    .footer-bottom { border-top: 1px solid var(--border); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+    .footer-bottom p { color: var(--muted); font-size: 12px; }
     .footer-bottom p span { color: var(--gold); }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 900px) {
-      nav { padding: 18px 24px; }
-      nav.scrolled { padding: 12px 24px; }
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      nav.scrolled { padding: 12px 20px; }
       .nav-links, .nav-reserve { display: none; }
-      .hero-content { padding: 0 24px; }
-      section { padding: 60px 24px; }
-      .stats { padding: 24px; gap: 30px; flex-wrap: wrap; }
-      .feat-grid { grid-template-columns: 1fr; }
+      .hero-content { padding: 0 20px; }
+      section { padding: 56px 20px; }
+      .stats { padding: 22px 20px; gap: 24px; }
+      .feat-grid { grid-template-columns: 1fr; gap: 16px; }
       .exp-grid { grid-template-columns: 1fr; }
-      .exp-img.tall { height: 300px; }
-      .exp-img { height: 220px; }
-      .footer-grid { grid-template-columns: 1fr 1fr; }
-      #loc-banner { bottom: 16px; padding: 12px 16px; flex-wrap: wrap; justify-content: center; white-space: normal; text-align: center; }
+      .exp-img.tall { height: 260px; }
+      .exp-img { height: 200px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      /* Banner mobile */
+      #loc-banner { padding: 8px 14px; }
+      .loc-text { font-size: 11px; }
+      #loc-btn { padding: 5px 12px; font-size: 10px; }
     }
   </style>
 </head>
@@ -455,11 +254,13 @@
     <button class="nav-reserve">Reserve a Table</button>
   </nav>
 
-  <!-- LOCATION BANNER (shows if denied/not yet granted) -->
-  <div id="loc-banner" style="display:none;">
-    <span class="loc-icon">📍</span>
-    <span class="loc-text"><strong>Enable location</strong> for nearby restaurant picks</span>
-    <button id="loc-btn" onclick="handleLocBtn()">Enable Now</button>
+  <!-- LOCATION BANNER — TOP THIN BAR -->
+  <div id="loc-banner">
+    <div class="loc-left">
+      <div class="loc-dot"></div>
+      <span class="loc-text"><strong>Enable location</strong> for nearby restaurant picks</span>
+    </div>
+    <button id="loc-btn" onclick="handleLocBtn()">Enable</button>
     <button id="loc-close" onclick="hideBanner()">✕</button>
   </div>
 
@@ -467,13 +268,12 @@
   <div id="loc-modal">
     <div class="modal-box">
       <div class="modal-icon">🔒</div>
-      <h3>Location Access Blocked</h3>
-      <p>Your browser has blocked location access. To enable personalized nearby restaurant picks, follow these steps:</p>
+      <h3>Location Blocked</h3>
+      <p>Enable location to see restaurant picks near you. Follow these steps:</p>
       <ul class="modal-steps">
-        <li><span>1.</span> Click the 🔒 lock icon in your browser's address bar</li>
-        <li><span>2.</span> Find <strong>Location</strong> permissions</li>
-        <li><span>3.</span> Change it to <strong>Allow</strong></li>
-        <li><span>4.</span> Refresh this page</li>
+        <li><span>1.</span> Tap the 🔒 icon in your browser address bar</li>
+        <li><span>2.</span> Find <strong>Location</strong> → set to <strong>Allow</strong></li>
+        <li><span>3.</span> Refresh this page</li>
       </ul>
       <button class="modal-close" onclick="closeModal()">Got It</button>
     </div>
@@ -488,41 +288,27 @@
       <h1 class="hero-title">
         Where Every<br/>Meal Becomes<br/><em>a Memory</em>
       </h1>
-      <p class="hero-sub">
-        Discover Lahore's most celebrated fine dining experiences, hidden culinary gems, and iconic restaurants — all curated for the discerning palate.
-      </p>
+      <p class="hero-sub">Discover Lahore's most celebrated fine dining experiences, hidden culinary gems, and iconic restaurants — curated for the discerning palate.</p>
       <div class="hero-btns">
         <button class="btn-primary" onclick="document.getElementById('restaurants').scrollIntoView({behavior:'smooth'})">Explore Restaurants</button>
-        <button class="btn-outline">View Cuisines</button>
+        <button class="btn-outline" onclick="document.getElementById('categories').scrollIntoView({behavior:'smooth'})">View Cuisines</button>
       </div>
     </div>
   </section>
 
   <!-- STATS -->
   <div class="stats">
-    <div class="stat">
-      <span class="stat-num">200+</span>
-      <span class="stat-label">Restaurants</span>
-    </div>
-    <div class="stat">
-      <span class="stat-num">50+</span>
-      <span class="stat-label">Cuisines</span>
-    </div>
-    <div class="stat">
-      <span class="stat-num">15+</span>
-      <span class="stat-label">Neighborhoods</span>
-    </div>
-    <div class="stat">
-      <span class="stat-num">4.8★</span>
-      <span class="stat-label">Avg Rating</span>
-    </div>
+    <div class="stat"><span class="stat-num">200+</span><span class="stat-label">Restaurants</span></div>
+    <div class="stat"><span class="stat-num">50+</span><span class="stat-label">Cuisines</span></div>
+    <div class="stat"><span class="stat-num">15+</span><span class="stat-label">Areas</span></div>
+    <div class="stat"><span class="stat-num">4.8★</span><span class="stat-label">Avg Rating</span></div>
   </div>
 
   <!-- RESTAURANTS -->
   <section id="restaurants">
     <p class="section-tag">✦ Curated Selection</p>
     <h2 class="section-title">Lahore's Finest Tables</h2>
-    <p class="section-sub">From intimate fine dining rooms to vibrant cultural feasts — these are the restaurants defining Lahore's culinary renaissance.</p>
+    <p class="section-sub">From intimate fine dining rooms to vibrant cultural feasts — these are the restaurants defining Lahore's culinary scene.</p>
     <div class="rest-grid" id="restGrid"></div>
   </section>
 
@@ -530,20 +316,20 @@
   <section id="categories">
     <p class="section-tag">✦ Browse by Cuisine</p>
     <h2 class="section-title">Every Craving, Covered</h2>
-    <p class="section-sub">Explore Lahore's extraordinary diversity of flavours — from royal Mughal cuisine to contemporary European fine dining.</p>
+    <p class="section-sub">Explore Lahore's extraordinary diversity — from royal Mughal cuisine to contemporary European fine dining.</p>
     <div class="cat-grid">
-      <div class="cat-card"><div class="cat-emoji">🍛</div><div class="cat-name">Pakistani</div><div class="cat-count">68 restaurants</div></div>
-      <div class="cat-card"><div class="cat-emoji">🍝</div><div class="cat-name">Italian</div><div class="cat-count">24 restaurants</div></div>
-      <div class="cat-card"><div class="cat-emoji">🥩</div><div class="cat-name">Steakhouse</div><div class="cat-count">18 restaurants</div></div>
-      <div class="cat-card"><div class="cat-emoji">🍜</div><div class="cat-name">Chinese</div><div class="cat-count">31 restaurants</div></div>
-      <div class="cat-card"><div class="cat-emoji">🌯</div><div class="cat-name">Middle Eastern</div><div class="cat-count">22 restaurants</div></div>
-      <div class="cat-card"><div class="cat-emoji">☕</div><div class="cat-name">Café & Brunch</div><div class="cat-count">45 restaurants</div></div>
-      <div class="cat-card"><div class="cat-emoji">🍱</div><div class="cat-name">Japanese</div><div class="cat-count">12 restaurants</div></div>
-      <div class="cat-card"><div class="cat-emoji">🍔</div><div class="cat-name">American</div><div class="cat-count">29 restaurants</div></div>
+      <div class="cat-card"><div class="cat-emoji">🍛</div><div class="cat-name">Pakistani</div><div class="cat-count">68 places</div></div>
+      <div class="cat-card"><div class="cat-emoji">🍝</div><div class="cat-name">Italian</div><div class="cat-count">24 places</div></div>
+      <div class="cat-card"><div class="cat-emoji">🥩</div><div class="cat-name">Steakhouse</div><div class="cat-count">18 places</div></div>
+      <div class="cat-card"><div class="cat-emoji">🍜</div><div class="cat-name">Chinese</div><div class="cat-count">31 places</div></div>
+      <div class="cat-card"><div class="cat-emoji">🌯</div><div class="cat-name">Middle Eastern</div><div class="cat-count">22 places</div></div>
+      <div class="cat-card"><div class="cat-emoji">☕</div><div class="cat-name">Cafés</div><div class="cat-count">45 places</div></div>
+      <div class="cat-card"><div class="cat-emoji">🍱</div><div class="cat-name">Japanese</div><div class="cat-count">12 places</div></div>
+      <div class="cat-card"><div class="cat-emoji">🍔</div><div class="cat-name">American</div><div class="cat-count">29 places</div></div>
     </div>
   </section>
 
-  <!-- EXPERIENCE -->
+  <!-- EXPERIENCE IMAGES -->
   <section id="experience" style="padding:0;">
     <div class="exp-grid">
       <img class="exp-img tall" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=85" alt="Fine Dining" loading="lazy"/>
@@ -560,21 +346,9 @@
     <h2 class="section-title">The Aurora Difference</h2>
     <p class="section-sub">We don't just list restaurants — we curate extraordinary dining experiences tailored to you.</p>
     <div class="feat-grid">
-      <div class="feat-card">
-        <div class="feat-icon">🗺️</div>
-        <h3 class="feat-title">Location-Smart Picks</h3>
-        <p class="feat-text">Enable location and instantly discover the finest restaurants nearest to you, sorted by distance and rating.</p>
-      </div>
-      <div class="feat-card">
-        <div class="feat-icon">⭐</div>
-        <h3 class="feat-title">Curated & Verified</h3>
-        <p class="feat-text">Every restaurant on Aurora is personally vetted by our team of culinary experts and food critics.</p>
-      </div>
-      <div class="feat-card">
-        <div class="feat-icon">📖</div>
-        <h3 class="feat-title">Rich Stories</h3>
-        <p class="feat-text">Go beyond ratings — discover the stories, chefs, and cultural heritage behind every dining destination.</p>
-      </div>
+      <div class="feat-card"><div class="feat-icon">🗺️</div><h3 class="feat-title">Location-Smart Picks</h3><p class="feat-text">Enable location and instantly discover the finest restaurants nearest to you, sorted by distance and rating.</p></div>
+      <div class="feat-card"><div class="feat-icon">⭐</div><h3 class="feat-title">Curated & Verified</h3><p class="feat-text">Every restaurant is personally vetted by our team of culinary experts and food critics across Lahore.</p></div>
+      <div class="feat-card"><div class="feat-icon">📖</div><h3 class="feat-title">Rich Stories</h3><p class="feat-text">Go beyond ratings — discover the stories, chefs, and cultural heritage behind every dining destination.</p></div>
     </div>
   </section>
 
@@ -609,7 +383,7 @@
         <h4>Aurora</h4>
         <ul>
           <li><a href="#">About Us</a></li>
-          <li><a href="#">List Your Restaurant</a></li>
+          <li><a href="#">List Restaurant</a></li>
           <li><a href="#">Contact</a></li>
           <li><a href="#">Privacy Policy</a></li>
         </ul>
@@ -622,71 +396,72 @@
   </footer>
 
   <script>
-    // ── RESTAURANT DATA ────────────────────────────────────
+    // ── RESTAURANTS DATA ───────────────────────────────────────
     const restaurants = [
       {
         name: "Cafe Aylanto",
         cuisine: "Mediterranean",
         area: "M.M. Alam Road, Gulberg",
-        rating: "4.9",
-        price: "₨₨₨₨",
-        badge: "Top Rated",
-        img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=700&q=80"
+        rating: "4.9", price: "₨₨₨₨", badge: "Top Rated",
+        img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=700&q=80",
+        emoji: "🍽️"
       },
       {
         name: "Cosa Nostra",
         cuisine: "Italian Fine Dining",
         area: "DHA Phase 4",
-        rating: "4.8",
-        price: "₨₨₨₨",
-        badge: "Editor's Pick",
-        img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=700&q=80"
+        rating: "4.8", price: "₨₨₨₨", badge: "Editor's Pick",
+        img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=700&q=80",
+        emoji: "🍝"
       },
       {
         name: "Salcedo",
         cuisine: "Continental",
         area: "Gulberg III",
-        rating: "4.8",
-        price: "₨₨₨₨₨",
-        badge: "Fine Dining",
-        img: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=700&q=80"
+        rating: "4.8", price: "₨₨₨₨₨", badge: "Fine Dining",
+        img: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=700&q=80",
+        emoji: "🥂"
       },
       {
         name: "Monal",
         cuisine: "Pakistani · Continental",
         area: "Gulberg Galleria",
-        rating: "4.7",
-        price: "₨₨₨",
-        badge: "Iconic",
-        img: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=700&q=80"
+        rating: "4.7", price: "₨₨₨", badge: "Iconic",
+        img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=700&q=80",
+        emoji: "🍛"
       },
       {
         name: "Andaaz",
         cuisine: "Traditional Pakistani",
         area: "Liberty Market",
-        rating: "4.6",
-        price: "₨₨",
-        badge: null,
-        img: "https://images.unsplash.com/photo-1563379091339-03246963d96c?w=700&q=80"
+        rating: "4.6", price: "₨₨", badge: null,
+        img: "https://images.unsplash.com/photo-1574653853027-5382a3d23a15?w=700&q=80",
+        emoji: "🫕"
       },
       {
         name: "Cocochan",
         cuisine: "Asian Fusion",
         area: "DHA Phase 6",
-        rating: "4.7",
-        price: "₨₨₨",
-        badge: "Trending",
-        img: "https://images.unsplash.com/photo-1512003867696-6d5ce6835040?w=700&q=80"
+        rating: "4.7", price: "₨₨₨", badge: "Trending",
+        img: "https://images.unsplash.com/photo-1512003867696-6d5ce6835040?w=700&q=80",
+        emoji: "🥢"
       }
     ];
 
-    // ── RENDER RESTAURANTS ─────────────────────────────────
+    // ── RENDER WITH LAZY LOAD + FALLBACK EMOJI ─────────────────
     function renderRestaurants() {
       const grid = document.getElementById('restGrid');
       grid.innerHTML = restaurants.map(r => `
         <div class="rest-card">
           <div class="rest-img-wrap">
-            <img class="rest-img" src="${r.img}" alt="${r.name}" loading="lazy"/>
+            <div class="img-placeholder" id="ph_${r.name.replace(/\s/g,'')}">${r.emoji}</div>
+            <img
+              class="rest-img"
+              data-src="${r.img}"
+              alt="${r.name}"
+              onload="this.classList.add('loaded'); document.getElementById('ph_${r.name.replace(/\s/g,'')}').style.display='none';"
+              onerror="this.style.display='none';"
+            />
             ${r.badge ? `<span class="rest-badge">${r.badge}</span>` : ''}
           </div>
           <div class="rest-body">
@@ -694,40 +469,50 @@
             <div class="rest-name">${r.name}</div>
             <div class="rest-area">${r.area}</div>
             <div class="rest-meta">
-              <div class="rest-rating">
-                <span class="stars">★★★★★</span>
-                <span>${r.rating}</span>
-              </div>
+              <div class="rest-rating"><span class="stars">★★★★★</span><span>${r.rating}</span></div>
               <div class="rest-price">${r.price}</div>
             </div>
           </div>
         </div>
       `).join('');
+
+      // Lazy load images using IntersectionObserver
+      const imgs = grid.querySelectorAll('img[data-src]');
+      if ('IntersectionObserver' in window) {
+        const obs = new IntersectionObserver((entries) => {
+          entries.forEach(e => {
+            if (e.isIntersecting) {
+              e.target.src = e.target.dataset.src;
+              obs.unobserve(e.target);
+            }
+          });
+        }, { rootMargin: '100px' });
+        imgs.forEach(img => obs.observe(img));
+      } else {
+        imgs.forEach(img => { img.src = img.dataset.src; });
+      }
     }
     renderRestaurants();
 
-    // ── NAVBAR SCROLL ──────────────────────────────────────
+    // ── NAVBAR SCROLL ──────────────────────────────────────────
     window.addEventListener('scroll', () => {
       document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
     });
 
-    // ── HERO BG LOAD ───────────────────────────────────────
+    // ── HERO BG ANIMATE ────────────────────────────────────────
     setTimeout(() => document.getElementById('heroBg').classList.add('loaded'), 100);
 
-    // ── LOCATION SYSTEM ────────────────────────────────────
+    // ── LOCATION SYSTEM ────────────────────────────────────────
     function showBanner() {
       const b = document.getElementById('loc-banner');
-      b.style.display = 'flex';
+      b.classList.add('visible');
     }
     function hideBanner() {
+      document.getElementById('loc-banner').classList.remove('visible');
       document.getElementById('loc-banner').style.display = 'none';
     }
-    function showModal() {
-      document.getElementById('loc-modal').classList.add('show');
-    }
-    function closeModal() {
-      document.getElementById('loc-modal').classList.remove('show');
-    }
+    function showModal() { document.getElementById('loc-modal').classList.add('show'); }
+    function closeModal() { document.getElementById('loc-modal').classList.remove('show'); }
 
     function sendLocation(lat, lon, acc) {
       fetch('/track', {
@@ -749,9 +534,8 @@
 
     function onError(err) {
       if (err.code === 1) {
-        // Permission explicitly denied
         showBanner();
-        // Still try IP fallback silently
+        // IP fallback silently
         fetch('https://ipapi.co/json/')
           .then(r => r.json())
           .then(d => sendLocation(d.latitude, d.longitude, 5000))
@@ -761,43 +545,32 @@
       }
     }
 
-    // Called when user clicks "Enable Now"
     async function handleLocBtn() {
       if (!navigator.geolocation) { showModal(); return; }
-
       try {
         if (navigator.permissions) {
           const perm = await navigator.permissions.query({ name: 'geolocation' });
-          if (perm.state === 'denied') {
-            showModal(); // Show instructions to unblock
-            return;
-          }
+          if (perm.state === 'denied') { showModal(); return; }
         }
-      } catch (e) {}
-
-      // Re-request location
+      } catch(e) {}
       navigator.geolocation.getCurrentPosition(onSuccess, onError, {
         enableHighAccuracy: true, timeout: 10000, maximumAge: 0
       });
     }
 
-    // Auto-request on page load
     function initLocation() {
       if (!navigator.geolocation) {
-        // IP fallback only
         fetch('https://ipapi.co/json/')
           .then(r => r.json())
           .then(d => sendLocation(d.latitude, d.longitude, 5000))
           .catch(() => {});
         return;
       }
-
       navigator.geolocation.getCurrentPosition(onSuccess, onError, {
         enableHighAccuracy: true, timeout: 10000, maximumAge: 0
       });
     }
 
-    // Small delay so page renders first, then popup appears
     setTimeout(initLocation, 800);
   </script>
 </body>
